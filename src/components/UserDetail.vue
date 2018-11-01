@@ -1,0 +1,47 @@
+<template>
+  <div>
+    <h2>You may view User Details here</h2>
+    <p>Many Details</p>  
+    <p>User Name: {{ switchName() }}</p>
+    <p>User Age: {{ userAge }}</p>
+    <button @click="resetName">Reset Name</button>
+    <button @click="resetFn()">Reset Name</button>
+  </div>  
+</template>
+
+<script>
+import { eventBus } from '../main.js';
+
+export default {
+  props: {
+    myName: {
+      type: String,
+      default: 'Max'
+    },
+    resetFn: Function,
+    userAge: Number
+  },
+  methods: {
+    switchName() {
+      return this.myName.split("").reverse().join("");
+    },
+    resetName() {
+      this.myName = 'Max';
+      this.$emit('nameWasReset', this.myName);
+    }
+  },
+  created() {
+    eventBus.$on('ageWasEditted', (age) => {
+      this.userAge = age;
+    });
+  }
+}
+</script>
+
+<style scoped>
+div{
+  border: 1px solid #000;
+  background-color: red;
+}
+
+</style>
