@@ -1,23 +1,33 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource';
+import VueRouter from 'vue-router';
 import App from './App.vue'
+import { routes } from './routes.js'
 
+Vue.use(VueRouter);
 
-Vue.use(VueResource);
-
-Vue.http.options.root = 'https://vuejs-http-d3c42.firebaseio.com/';
-Vue.http.interceptors.push((request, next) => {
-  console.log(request);
-  if(request.method == 'POST') {
-    request.method = 'PUT';
+const router = new VueRouter({
+  routes: routes,
+  mode: 'history',
+  scrollBehavior(to, from, savedPosition) {
+    if(savedPosition) {
+      return savedPosition;
+    }
+    if(to.hash) {
+      return {
+        selector: to.hash
+      }
+    }
+    return {x: 0, y: 0};
   }
-  next(response => {
-    response.json = () => { return {messages: response.body} }
-  });
 });
 
+router.beforeEach((to, from, next) => {
+  console.log('global beforeEach');
+  next();
+});
 
 new Vue({
   el: '#app',
+  router: router,
   render: h => h(App)
 })
