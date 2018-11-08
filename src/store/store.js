@@ -74,39 +74,34 @@ export const store = new Vuex.Store({
       
       state.funds -= currentValue; 
 
+      console.log(payload);
+
       if (state.myStocks.length == 0) {
         state.myStocks.push({
           title: state.stocks[payload.index].title,
           quantity: payload.quantity[payload.index],
           price: state.stocks[payload.index].price
+        });        
+      } else {
+        for (let i = 0; i < state.myStocks.length; i++) {
+          if(state.myStocks[i].title == state.stocks[payload.index].title) {
+            console.log('its a trap? 1');
+            state.myStocks[i] = {
+              title: state.stocks[payload.index].title,
+              quantity: +state.myStocks[i].quantity + +payload.quantity[payload.index],
+              price: state.stocks[payload.index].price
+            };
+            return;    
+          }
+        };
+        
+        state.myStocks.push({
+          title: state.stocks[payload.index].title,
+          quantity: payload.quantity[payload.index],
+          price: state.stocks[payload.index].price
         });
-      } 
-      // else {
-      //   for (let i = 0; i < state.myStocks.length; i++) {
-      //     for (let k = 0; k < state.stocks.length; k++) {
-      //       if (state.myStocks[i].title == state.stocks[k].title) {
-      //         console.log('its a trap? 1');
-      //         state.myStocks[i] = {
-      //           title: state.stocks[payload.index].title,
-      //           quantity: payload.quantity[payload.index],
-      //           price: state.stocks[payload.index].price
-      //         };            
-      //       }
-      //       else {
-      //         console.log('its a trap? 2');
-      //         state.myStocks.push({
-      //           title: state.stocks[payload.index].title,
-      //           quantity: payload.quantity[payload.index],
-      //           price: state.stocks[payload.index].price
-      //         });
-      //       }
-      //     }
-      //   }
-      // }
-
-      
-
-      
+        console.log('its a trap? 2');
+      }
     }
   },
   actions: {

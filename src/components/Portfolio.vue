@@ -15,10 +15,10 @@
             <div class="panel-body"> 
               <div class="row">
                 <div class="col-xs-5">
-                  <input type="text" class="form-control" placeholder="Quantity">
+                  <input v-model="isDisabled" type="text" class="form-control" placeholder="Quantity">
                 </div>
                 <div class="col-xs-7 text-right">
-                  <button class="btn btn-danger">Sell</button>
+                  <button class="btn btn-danger" :disabled="isDisabled == ''">Sell</button>
                 </div>
               </div>  
             </div> 
@@ -36,6 +36,11 @@ import {mapGetters} from 'vuex';
 
 
 export default {
+  data() {
+    return {
+      isDisabled: ''
+    };
+  },
   computed: {
     ...mapGetters([
       'getMyStocks'
