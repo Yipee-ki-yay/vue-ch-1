@@ -86,11 +86,9 @@ export const store = new Vuex.Store({
         for (let i = 0; i < state.myStocks.length; i++) {
           if(state.myStocks[i].title == state.stocks[payload.index].title) {
             console.log('its a trap? 1');
-            state.myStocks[i] = {
-              title: state.stocks[payload.index].title,
-              quantity: +state.myStocks[i].quantity + +payload.quantity[payload.index],
-              price: state.stocks[payload.index].price
-            };
+            state.myStocks[i].title = state.stocks[payload.index].title;
+            state.myStocks[i].quantity = +state.myStocks[i].quantity + +payload.quantity[payload.index];
+            state.myStocks[i].price = state.stocks[payload.index].price;            
             return;    
           }
         };
@@ -102,6 +100,19 @@ export const store = new Vuex.Store({
         });
         console.log('its a trap? 2');
       }
+    },
+    onSell(state, payload) {
+      if(payload.quantity > state.myStocks[payload.index].quantity) {
+        alert('You dont have these quantity!');
+        return;
+      }
+
+      let sellValue = state.myStocks[payload.index].price * 
+                      payload.quantity;     
+
+      state.funds += sellValue; 
+      state.myStocks[payload.index].quantity -= payload.quantity;                  
+      
     }
   },
   actions: {
@@ -114,6 +125,9 @@ export const store = new Vuex.Store({
     onBuy({commit}, payload) {
       // console.log(payload);
       commit('onBuy', payload);
+    },
+    onSell({commit}, payload) {
+      commit('onSell', payload);
     }
   }
 });

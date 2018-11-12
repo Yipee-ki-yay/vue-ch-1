@@ -20,8 +20,8 @@
               <!--  -->
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" @click.prevent="onEndDay">End Day</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Save & Load <span class="caret"></span></a>
+                <li class="dropdown" @click="toggleMenu">
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Save & Load <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Save Data</a></li>
                     <li><a href="#">Load Data</a></li>
@@ -56,7 +56,12 @@
     methods: {
       ...mapActions([
         'onEndDay'
-      ])
+      ]),
+      toggleMenu($event) {
+        if ($event.currentTarget.classList.contains('dropdown')) {
+          $event.currentTarget.classList.toggle('open');
+        }
+      }
     }
   }
 </script>
@@ -64,5 +69,8 @@
 <style>
   .header {
     margin-top: 40px;
+  }
+  .dropdown-toggle.open .dropdown-menu {
+    display: block;    
   }
 </style>
