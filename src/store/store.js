@@ -102,7 +102,7 @@ export const store = new Vuex.Store({
       }
     },
     onSell(state, payload) {
-      if(payload.quantity > state.myStocks[payload.index].quantity) {
+      if(+payload.quantity > +state.myStocks[payload.index].quantity) {
         alert('You dont have these quantity!');
         return;
       }
@@ -123,7 +123,6 @@ export const store = new Vuex.Store({
       commit('onEndDay');
     },
     onBuy({commit}, payload) {
-      // console.log(payload);
       commit('onBuy', payload);
     },
     onSell({commit}, payload) {

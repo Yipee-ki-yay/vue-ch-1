@@ -36,10 +36,9 @@
       </div>
     </div>
   </header>
-  <router-view></router-view>
-  <!-- <app-home></app-home>
-  <app-stocks></app-stocks>
-  <app-portfolio></app-portfolio> -->
+  <transition name="slide" mode="out-in">
+    <router-view></router-view>
+  </transition>
 </div>
 </template>
 
@@ -73,4 +72,37 @@
   .dropdown-toggle.open .dropdown-menu {
     display: block;    
   }
+
+  .slide-enter {
+
+  }
+  .slide-enter-active {
+    animation: slide-in .4s ease-out forwards;
+  }
+  .slide-leave {
+
+  }
+  .slide-leave-active {
+    animation: slide-out .4s ease-out forwards;
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(-30px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-30px);
+      opacity: 0;
+    }    
+  }  
 </style>
